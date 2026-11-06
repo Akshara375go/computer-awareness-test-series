@@ -4,6 +4,7 @@
 (function () {
   var CFG = {
     FREE_TESTS: 2,                                   // tests 1-2 free
+     UPLOADED: 3,                                     // how many tests are uploaded; change to 4, 5... as you add them
     PRICE: "\u20B949",
     RAZORPAY_LINK: "https://rzp.io/rzp/uvfDzSNI",
     TELEGRAM_DM: "https://t.me/Blackpanther2201",
@@ -15,7 +16,7 @@
 
   function unlocked() { try { return localStorage.getItem(CFG.KEY) === "1"; } catch (e) { return false; } }
   function setUnlocked() { try { localStorage.setItem(CFG.KEY, "1"); } catch (e) {} }
-  function live() { return Date.now() >= new Date(CFG.LAUNCH).getTime(); }
+    function live() { return true; }
   function locked(n) { return n > CFG.FREE_TESTS && !unlocked(); }
   function same(a, b) { return String(a).trim().toLowerCase() === String(b).trim().toLowerCase(); }
 
