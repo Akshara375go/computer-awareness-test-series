@@ -8,7 +8,7 @@
     PRICE: "\u20B949",
     RAZORPAY_LINK: "https://rzp.io/rzp/uvfDzSNI",
     TELEGRAM_DM: "https://t.me/Blackpanther2201",
-    UNLOCK_CODE: "CBT49",                            // give this to students after payment
+    UNLOCK_CODE: "CBT375",                            // give this to students after payment
     LAUNCH: "2026-11-09T10:00:00+05:30",             // 9 Nov 2026, 10:00 AM IST
     LAUNCH_TEXT: "9 Nov, 10:00 AM",
     KEY: "cbt_unlocked_v1"                           // change to ..._v2 to re-lock everyone
