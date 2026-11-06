@@ -11,7 +11,7 @@
     UNLOCK_CODE: "CBT375",                            // give this to students after payment
     LAUNCH: "2026-11-09T10:00:00+05:30",             // 9 Nov 2026, 10:00 AM IST
     LAUNCH_TEXT: "9 Nov, 10:00 AM",
-    KEY: "cbt_unlocked_v1"                           // change to ..._v2 to re-lock everyone
+    KEY: "cbt_unlocked_v2"                           // change to ..._v2 to re-lock everyone
   };
 
   function unlocked() { try { return localStorage.getItem(CFG.KEY) === "1"; } catch (e) { return false; } }
