@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Computer MCQ Practice Tests | KARNATAKA e-Exam TEST SERIES (CBT MOCKS)</title>
+<meta name="description" content="Computer Awareness Test Series – 20 topic-wise computer MCQ practice tests by KARNATAKA e-Exam TEST SERIES (CBT MOCKS).">
+<meta name="theme-color" content="#0b1020">
+<link rel="icon" href="logo.png">
+<style>
+  :root{
+    --bg:#0b1020;
+    --card:#151a35;
+    --card-border:#262d52;
+    --text:#d9e0ff;
+    --muted:#a9b4e0;
+    --accent:#8c9eff;
+    --coral:#ff6b73;
+    --coral-hover:#ff868d;
+    --dark:#0b1020;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    line-height:1.5;
+    min-height:100vh;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+  /* Header */
+  header{padding:14px 0 12px}
+  .brand{display:flex;align-items:center;gap:16px}
+  .logo{
+    width:62px;height:62px;border-radius:50%;
+    background:#fff;flex-shrink:0;object-fit:cover;
+    border:2px solid #fff;display:block;
+  }
+  .brand-name{
+    color:var(--accent);
+    font-weight:700;font-size:.95rem;letter-spacing:.3px;line-height:1.35;
+  }
+  .rule{border:0;border-top:1px solid var(--card-border);margin:0}
+
+  /* Telegram banner */
+  .tg{
+    margin-top:20px;
+    background:var(--accent);
+    color:var(--dark);
+    border-radius:12px;
+    padding:14px 18px;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    font-weight:600;font-size:.9rem;
+  }
+  .tg-btn{
+    background:var(--coral);color:var(--dark);
+    text-decoration:none;font-weight:800;font-size:.8rem;letter-spacing:.5px;
+    padding:10px 20px;border-radius:8px;white-space:nowrap;
+    transition:background .2s,transform .15s;
+  }
+  .tg-btn:hover{background:var(--coral-hover);transform:translateY(-1px)}
+
+  /* Heading */
+  h1{
+    font-family:Georgia,"Times New Roman",serif;
+    color:var(--accent);
+    font-size:clamp(1.55rem,4.6vw,2.15rem);
+    font-weight:700;letter-spacing:.3px;
+    margin:26px 0 8px;
+  }
+  .sub{color:var(--muted);font-size:.9rem;max-width:520px}
+
+  /* Cards */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+    gap:18px;margin-top:24px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-top:3px solid var(--coral);
+    border-radius:12px;
+    padding:18px;
+    display:flex;flex-direction:column;
+    transition:transform .2s,box-shadow .2s,border-color .2s;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(0,0,0,.45);border-color:#3a4378;border-top-color:var(--coral)}
+  .badge{
+    align-self:flex-start;
+    background:var(--accent);color:var(--dark);
+    font-size:.72rem;font-weight:700;
+    padding:3px 12px;border-radius:999px;margin-bottom:12px;
+  }
+  .card h2{
+    font-family:Georgia,"Times New Roman",serif;
+    color:#fff;font-size:1.12rem;font-weight:700;margin-bottom:8px;
+  }
+  .card p{color:var(--muted);font-size:.84rem;flex:1}
+  .chips{display:flex;gap:8px;margin:14px 0 16px;flex-wrap:wrap}
+  .chip{
+    border:1px solid var(--card-border);color:var(--muted);
+    font-size:.68rem;padding:3px 10px;border-radius:999px;
+  }
+  .start{
+    display:block;text-align:center;text-decoration:none;
+    background:var(--coral);color:var(--dark);
+    font-weight:800;font-size:.8rem;letter-spacing:.6px;
+    padding:13px 10px;border-radius:8px;
+    transition:background .2s;
+  }
+  .start:hover{background:var(--coral-hover)}
+
+  /* How it works */
+  .how{
+    margin-top:26px;
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:12px;padding:18px 20px;
+  }
+  .how h3{color:var(--accent);font-size:.95rem;margin-bottom:8px}
+  .how ol{margin-left:20px;color:var(--muted);font-size:.86rem}
+  .how li{margin:4px 0}
+
+  /* Footer */
+  footer{
+    margin-top:30px;padding:18px 0 34px;
+    border-top:1px solid var(--card-border);
+    text-align:center;color:var(--muted);
+    font-size:.76rem;font-weight:700;letter-spacing:.3px;
+  }
+
+  /* Toast */
+  #toast{
+    position:fixed;left:50%;bottom:26px;transform:translate(-50%,30px);
+    background:var(--accent);color:var(--dark);
+    padding:11px 20px;border-radius:10px;font-weight:700;font-size:.85rem;
+    opacity:0;pointer-events:none;transition:all .3s;z-index:50;
+    max-width:90vw;text-align:center;
+  }
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media (max-width:560px){
+    .wrap{padding:0 14px}
+    .tg{flex-direction:column;align-items:stretch;text-align:center}
+    .tg-btn{text-align:center}
+    .logo{width:54px;height:54px}
+    .brand-name{font-size:.85rem}
+    .grid{grid-template-columns:1fr}
+  }
+</style>
+<script src="lock.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <!-- Put your logo file named logo.png in the same folder as index.html -->
+      <img class="logo" id="logo" src="logo.png" alt="KARNATAKA e-Exam Test Series logo" width="62" height="62">
+      <div class="brand-name">KARNATAKA e-Exam TEST SERIES<br>(CBT MOCKS)</div>
+    </div>
+  </div>
+</header>
+<hr class="rule">
+
+<main class="wrap">
+
+  <section class="tg">
+    <span>Join our Telegram Channel for daily practice tests</span>
+    <a class="tg-btn" href="https://t.me/karnatakaeExamseries" target="_blank" rel="noopener">JOIN TELEGRAM</a>
+  </section>
+
+  <section class="tg" style="margin-top:12px;background:var(--card);color:var(--text);border:1px solid var(--accent)">
+    <span>🆓 <b>Tests 1–2 are FREE.</b> Unlock all remaining tests (3–20) for just <b>₹49</b>. All tests go live on <b>9 Nov, 10:00 AM</b> – pay now to unlock your series in advance.</span>
+    <a class="tg-btn" href="#" id="topUnlock">UNLOCK ₹49</a>
+  </section>
+
+  <h1>COMPUTER MCQ PRACTICE TESTS</h1>
+  <p class="sub">Choose a test, answer the multiple-choice questions, and practice topic-wise with instant results and explanations.</p>
+
+  <section class="grid" id="grid" aria-label="Computer practice tests"></section>
+
+  <section class="how">
+    <h3>How it works</h3>
+    <ol>
+      <li>Open a test and read each question.</li>
+      <li>Choose one option and see the explanation.</li>
+      <li>Finish the test to see your score and weak topics.</li>
+    </ol>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">KARNATAKA e-Exam TEST SERIES (CBT MOCKS)</div>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+/* ------------------------------------------------------------
+   HOW TO CONNECT A TEST LATER
+   Set the "url" of a test to its page, e.g. "tests/test-01.html".
+   While url is empty (""), the button shows "coming soon".
+------------------------------------------------------------ */
+const TESTS = [
+  { n:1,  title:"Introduction to Computer", url:"",
+    desc:"Components of Computer, Basic Functions of Computer, History of Computer, Generations of Computer, Classification of Computer, Characteristics and Limitations of Computer, and Applications of Computer." },
+  { n:2,  title:"Computer Architecture", url:"",
+    desc:"All important concepts related to Computer Architecture: CPU, ALU, control unit, registers, buses, instruction cycle and system organisation." },
+  { n:3,  title:"Input and Output Devices", url:"",
+    desc:"Keyboard, mouse, scanners, readers, monitors, printers, plotters, speakers and other input and output devices." },
+  { n:4,  title:"Computer Memory", url:"",
+    desc:"Primary and secondary memory, RAM, ROM, cache, virtual memory, storage devices and memory units." },
+  { n:5,  title:"Computer Software", url:"",
+    desc:"System software, application software, utility software, translators, firmware, licensing and software types." },
+  { n:6,  title:"Operating System", url:"",
+    desc:"Functions and types of operating systems, process and memory management, file systems, and popular operating systems." },
+  { n:7,  title:"Number System and Logic Gates", url:"",
+    desc:"Binary, octal, decimal and hexadecimal systems, conversions, binary arithmetic, codes, logic gates and Boolean algebra." },
+  { n:8,  title:"Programming Concepts", url:"",
+    desc:"Algorithms, flowcharts, programming languages, compilers, interpreters, and basic programming concepts." },
+  { n:9,  title:"HTML", url:"",
+    desc:"HTML basics, tags, attributes, lists, tables, links, images, forms and web page structure." },
+  { n:10, title:"Microsoft Windows", url:"",
+    desc:"Windows desktop, taskbar, Start menu, file explorer, control panel, settings, accessories and keyboard shortcuts." },
+  { n:11, title:"Microsoft Word", url:"",
+    desc:"Word processing, formatting, tables, mail merge, page layout, review tools, menus and shortcut keys." },
+  { n:12, title:"Microsoft Excel", url:"",
+    desc:"Worksheets, cells, formulas, functions, charts, data tools, formatting and Excel shortcut keys." },
+  { n:13, title:"Microsoft PowerPoint", url:"",
+    desc:"Slides, layouts, themes, transitions, animations, slide show options and presentation shortcuts." },
+  { n:14, title:"Database Concepts", url:"",
+    desc:"DBMS, data models, keys, normalisation, SQL basics, MS Access and database terminology." },
+  { n:15, title:"Data Communication", url:"",
+    desc:"Transmission modes, media, bandwidth, multiplexing, switching, modems and communication devices." },
+  { n:16, title:"Computer Networks", url:"",
+    desc:"LAN, MAN, WAN, topologies, network devices, protocols, OSI and TCP/IP models and IP addressing." },
+  { n:17, title:"Internet and Its Services", url:"",
+    desc:"Web browsers, search engines, email, WWW, URLs, e-commerce, social media and online services." },
+  { n:18, title:"Computer Security", url:"",
+    desc:"Viruses, malware, cyber crimes, firewalls, antivirus, encryption, cyber laws and safe computing." },
+  { n:19, title:"IT Trends and Technology", url:"",
+    desc:"AI, cloud computing, IoT, big data, blockchain, e-governance and emerging technologies." },
+  { n:20, title:"Nudi Software", url:"",
+    desc:"Kannada computing, Nudi and Baraha software, Kannada fonts, Unicode and typing basics." }
+];
+
+const grid = document.getElementById("grid");
+const toastEl = document.getElementById("toast");
+let toastTimer;
+
+function toast(msg){
+  toastEl.textContent = msg;
+  toastEl.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>toastEl.classList.remove("show"), 2400);
+}
+
+TESTS.forEach(t=>{
+  const card = document.createElement("article");
+  card.className = "card";
+  card.innerHTML =
+    '<span class="badge">Test ' + t.n + '</span>' +
+    '<h2></h2><p></p>' +
+    '<div class="chips"><span class="chip">MCQ</span><span class="chip">CBT Practice</span></div>' +
+    '<a class="start" href="#">START PRACTICE</a>';
+  card.querySelector("h2").textContent = t.title;
+  card.querySelector("p").textContent = t.desc;
+  const btn = card.querySelector(".start");
+  const isLocked = CBT.locked(t.n);
+  if (isLocked) {
+    card.querySelector(".badge").textContent = "Test " + t.n + " \uD83D\uDD12";
+    btn.textContent = "\uD83D\uDD12 UNLOCK FOR " + CBT.cfg.PRICE;
+    btn.addEventListener("click", e=>{ e.preventDefault(); CBT.open(); });
+  } else {
+    if (t.n <= CBT.cfg.FREE_TESTS) card.querySelector(".badge").textContent = "Test " + t.n + " \u2022 FREE";
+    else card.querySelector(".badge").textContent = "Test " + t.n + " \u2022 UNLOCKED";
+    btn.href = "test.html?t=" + t.n;
+    btn.addEventListener("click", e=>{
+      if (!CBT.live()) {
+        e.preventDefault();
+        toast("Test " + t.n + " goes live on " + CBT.cfg.LAUNCH_TEXT + "!");
+      }
+    });
+  }
+  grid.appendChild(card);
+});
+
+
+document.getElementById("topUnlock").addEventListener("click", e=>{
+  e.preventDefault();
+  if (CBT.unlocked()) toast("\u2705 Already unlocked. Tests go live on " + CBT.cfg.LAUNCH_TEXT);
+  else CBT.open();
+});
+(function(){
+  const need = parseInt(new URLSearchParams(location.search).get("need"),10);
+  if (!need) return;
+  if (CBT.locked(need)) CBT.open();
+  else if (!CBT.live()) toast("Tests go live on " + CBT.cfg.LAUNCH_TEXT + "!");
+})();
+
+/* Fallback if logo.png is missing */
+document.getElementById("logo").addEventListener("error", function(){
+  this.onerror = null;
+  this.src = "data:image/svg+xml;utf8," + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">' +
+    '<circle cx="50" cy="50" r="48" fill="#fff" stroke="#1b2a5e" stroke-width="4"/>' +
+    '<text x="50" y="34" font-family="Arial" font-weight="800" font-size="11" fill="#1b2a5e" text-anchor="middle">KARNATAKA</text>' +
+    '<text x="50" y="56" font-family="Arial" font-weight="800" font-size="22" fill="#c8102e" text-anchor="middle">e-Exam</text>' +
+    '<text x="50" y="70" font-family="Arial" font-weight="800" font-size="9" fill="#1b2a5e" text-anchor="middle">TEST SERIES</text>' +
+    '<rect x="28" y="75" width="44" height="12" rx="3" fill="#1b2a5e"/>' +
+    '<text x="50" y="84" font-family="Arial" font-weight="800" font-size="8" fill="#fff" text-anchor="middle">CBT MOCKS</text></svg>');
+});
+</script>
+</body>
+</html>
