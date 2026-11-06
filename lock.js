@@ -29,7 +29,7 @@
   var isTestPage = /test\.html$/i.test(location.pathname);
   if (isTestPage) {
     var n = parseInt(new URLSearchParams(location.search).get("t"), 10) || 1;
-    if (locked(n) || !live()) {
+    if (locked(n) || (n > CFG.FREE_TESTS && !live())) {
       window.CBT_BLOCKED = true;
       location.replace("index.html?need=" + n);
     }
@@ -72,7 +72,8 @@
       '<button class="b ok" id="cbtUnlock">UNLOCK</button>' +
       '<button class="x" id="cbtClose">Close</button>' +
       '</div>';
-    document.getElementById("cbtPay").href = CFG.RAZORPAY_LINK;
+      document.body.appendChild(ov);
+     document.getElementById("cbtPay").href = CFG.RAZORPAY_LINK;
     document.getElementById("cbtTg").href = CFG.TELEGRAM_DM;
     document.getElementById("cbtClose").onclick = close;
     ov.addEventListener("click", function (e) { if (e.target === ov) close(); });
