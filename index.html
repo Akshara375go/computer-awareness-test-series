@@ -281,7 +281,7 @@ TESTS.forEach(t=>{
     else card.querySelector(".badge").textContent = "Test " + t.n + " \u2022 UNLOCKED";
     btn.href = "test.html?t=" + t.n;
     btn.addEventListener("click", e=>{
-      if (!CBT.live()) {
+    if (t.n > CBT.cfg.FREE_TESTS && !CBT.live()) {
         e.preventDefault();
         toast("Test " + t.n + " goes live on " + CBT.cfg.LAUNCH_TEXT + "!");
       }
@@ -300,7 +300,7 @@ document.getElementById("topUnlock").addEventListener("click", e=>{
   const need = parseInt(new URLSearchParams(location.search).get("need"),10);
   if (!need) return;
   if (CBT.locked(need)) CBT.open();
-  else if (!CBT.live()) toast("Tests go live on " + CBT.cfg.LAUNCH_TEXT + "!");
+  else if (need > CBT.cfg.FREE_TESTS && !CBT.live()) toast("Tests go live on " + CBT.cfg.LAUNCH_TEXT + "!");
 })();
 
 /* Fallback if logo.png is missing */
