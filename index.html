@@ -279,13 +279,15 @@ TESTS.forEach(t=>{
   } else {
     if (t.n <= CBT.cfg.FREE_TESTS) card.querySelector(".badge").textContent = "Test " + t.n + " \u2022 FREE";
     else card.querySelector(".badge").textContent = "Test " + t.n + " \u2022 UNLOCKED";
-    btn.href = "test.html?t=" + t.n;
+    if (t.n > CBT.cfg.UPLOADED) {
+    btn.textContent = "COMING SOON";
     btn.addEventListener("click", e=>{
-    if (t.n > CBT.cfg.FREE_TESTS && !CBT.live()) {
-        e.preventDefault();
-        toast("Test " + t.n + " goes live on " + CBT.cfg.LAUNCH_TEXT + "!");
-      }
+      e.preventDefault();
+      toast("Test " + t.n + " will be added soon. Join our Telegram channel for updates!");
     });
+  } else {
+    btn.href = "test.html?t=" + t.n;
+  }
   }
   grid.appendChild(card);
 });
