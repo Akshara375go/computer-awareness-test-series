@@ -151,6 +151,7 @@
     .grid{grid-template-columns:1fr}
   }
 </style>
+<script src="lock.js"></script>
 </head>
 <body>
 
@@ -170,6 +171,11 @@
   <section class="tg">
     <span>Join our Telegram Channel for daily practice tests</span>
     <a class="tg-btn" href="https://t.me/karnatakaeExamseries" target="_blank" rel="noopener">JOIN TELEGRAM</a>
+  </section>
+
+  <section class="tg" style="margin-top:12px;background:var(--card);color:var(--text);border:1px solid var(--accent)">
+    <span>🆓 <b>Tests 1–2 are FREE.</b> Unlock all remaining tests (3–20) for just <b>₹49</b>. All tests go live on <b>9 Nov, 10:00 AM</b> – pay now to unlock your series in advance.</span>
+    <a class="tg-btn" href="#" id="topUnlock">UNLOCK ₹49</a>
   </section>
 
   <h1>COMPUTER MCQ PRACTICE TESTS</h1>
@@ -201,9 +207,9 @@
    While url is empty (""), the button shows "coming soon".
 ------------------------------------------------------------ */
 const TESTS = [
-  { n:1,  title:"Introduction to Computer", url:"test.html?t=1",
+  { n:1,  title:"Introduction to Computer", url:"",
     desc:"Components of Computer, Basic Functions of Computer, History of Computer, Generations of Computer, Classification of Computer, Characteristics and Limitations of Computer, and Applications of Computer." },
-  { n:2,  title:"Computer Architecture", url:"test.html?t=2",
+  { n:2,  title:"Computer Architecture", url:"",
     desc:"All important concepts related to Computer Architecture: CPU, ALU, control unit, registers, buses, instruction cycle and system organisation." },
   { n:3,  title:"Input and Output Devices", url:"",
     desc:"Keyboard, mouse, scanners, readers, monitors, printers, plotters, speakers and other input and output devices." },
@@ -265,16 +271,37 @@ TESTS.forEach(t=>{
   card.querySelector("h2").textContent = t.title;
   card.querySelector("p").textContent = t.desc;
   const btn = card.querySelector(".start");
-  if (t.url) {
-    btn.href = t.url;
+  const isLocked = CBT.locked(t.n);
+  if (isLocked) {
+    card.querySelector(".badge").textContent = "Test " + t.n + " \uD83D\uDD12";
+    btn.textContent = "\uD83D\uDD12 UNLOCK FOR " + CBT.cfg.PRICE;
+    btn.addEventListener("click", e=>{ e.preventDefault(); CBT.open(); });
   } else {
+    if (t.n <= CBT.cfg.FREE_TESTS) card.querySelector(".badge").textContent = "Test " + t.n + " \u2022 FREE";
+    else card.querySelector(".badge").textContent = "Test " + t.n + " \u2022 UNLOCKED";
+    btn.href = "test.html?t=" + t.n;
     btn.addEventListener("click", e=>{
-      e.preventDefault();
-      toast("Test " + t.n + " – " + t.title + ": coming soon!");
+      if (!CBT.live()) {
+        e.preventDefault();
+        toast("Test " + t.n + " goes live on " + CBT.cfg.LAUNCH_TEXT + "!");
+      }
     });
   }
   grid.appendChild(card);
 });
+
+
+document.getElementById("topUnlock").addEventListener("click", e=>{
+  e.preventDefault();
+  if (CBT.unlocked()) toast("\u2705 Already unlocked. Tests go live on " + CBT.cfg.LAUNCH_TEXT);
+  else CBT.open();
+});
+(function(){
+  const need = parseInt(new URLSearchParams(location.search).get("need"),10);
+  if (!need) return;
+  if (CBT.locked(need)) CBT.open();
+  else if (!CBT.live()) toast("Tests go live on " + CBT.cfg.LAUNCH_TEXT + "!");
+})();
 
 /* Fallback if logo.png is missing */
 document.getElementById("logo").addEventListener("error", function(){
