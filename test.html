@@ -88,6 +88,7 @@
     .qtext{font-size:.96rem}
   }
 </style>
+<script src="lock.js"></script>
 </head>
 <body>
 
@@ -159,11 +160,7 @@ const file = "tests/test-" + String(num).padStart(2,"0") + ".js";
 
 let Q = [], i = 0, score = 0, answers = [];
 
-const s = document.createElement("script");
-s.src = file;
-s.onload = () => (window.TEST_DATA && window.TEST_DATA.questions) ? init(window.TEST_DATA) : show("soon");
-s.onerror = () => show("soon");
-document.body.appendChild(s);
+if (!window.CBT_BLOCKED) document.body.appendChild(s);
 
 function init(d){
   Q = d.questions;
