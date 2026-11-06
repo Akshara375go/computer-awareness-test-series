@@ -1,282 +1,604 @@
-/* TEST 1 — INTRODUCTION TO COMPUTER (50 MCQs)
-   Fields: type  = match | stmt | pair | direct | real | misc
-           topic = shown in "weak topics" analysis
-           a     = index of correct option (0 = a, 1 = b, 2 = c, 3 = d)
-           l / r = optional List I / List II for "match the following"
-*/
-window.TEST_DATA = {
-  title: "Introduction to Computer",
-  questions: [
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Computer - CBT Mock Test</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            background: #eef2f5;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .question-container {
+            margin-bottom: 20px;
+        }
+        .question-text {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .options li:hover {
+            background: #e2eff9;
+        }
+        .options li.selected {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            transition: background 0.3s;
+        }
+        .btn-prev { background: #95a5a6; }
+        .btn-next { background: var(--secondary-color); }
+        .btn-submit { background: #27ae60; display: none; }
+        button:hover { opacity: 0.9; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        
+        #result-screen { display: none; }
+        .score-board {
+            text-align: center;
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .score-board h2 { color: #2e7d32; margin-top: 0; }
+        .review-box {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .correct-ans { color: #27ae60; font-weight: bold; }
+        .wrong-ans { color: var(--accent-color); font-weight: bold; }
+        .explanation {
+            background: #fff3cd;
+            padding: 10px;
+            border-left: 4px solid #ffc107;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .telegram-link {
+            display: block;
+            text-align: center;
+            background: #0088cc;
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .telegram-link:hover { background: #006699; }
+    </style>
+</head>
+<body>
 
-  { type:"match", topic:"History",
-    q:"Match List I with List II and select the correct answer using the codes given below:",
-    l:["Pascaline","Difference Engine","Tabulating Machine","Stepped Reckoner"],
-    r:["Herman Hollerith","Blaise Pascal","Charles Babbage","Gottfried Leibniz"],
-    o:["A-1, B-2, C-3, D-4","A-2, B-3, C-1, D-4","A-2, B-1, C-4, D-3","A-4, B-3, C-2, D-1"], a:1,
-    e:"Pascaline – Blaise Pascal (1642); Difference Engine – Charles Babbage; Tabulating Machine – Herman Hollerith (1890 US Census); Stepped Reckoner – Gottfried Leibniz (it could also multiply and divide)." },
+<div class="container" id="quiz-container">
+    <h1>Introduction to Computer</h1>
+    <div class="header-info">
+        <div>Question: <span id="current-q">1</span>/50</div>
+        <div>Marking: +1.00 | -0.25</div>
+    </div>
 
-  { type:"stmt", topic:"Generations",
-    q:"Consider the following statements about first-generation computers:\n1. They used vacuum tubes as the main electronic component.\n2. Programs were written in machine language.\n3. They used transistors to reduce heat and size.\nWhich of the statements given above is/are correct?",
-    o:["1 and 2 only","2 and 3 only","1 and 3 only","1, 2 and 3"], a:0,
-    e:"First generation (about 1940–56) used vacuum tubes and machine language. Transistors belong to the second generation, so statement 3 is wrong." },
+    <div class="question-container">
+        <div class="question-text" id="question-text">Loading question...</div>
+        <ul class="options" id="options-list"></ul>
+    </div>
 
-  { type:"real", topic:"Applications",
-    q:"A national bank connects thousands of branch terminals and ATMs to one central system that processes millions of transactions every day. Which type of computer is most suitable for this central system?",
-    o:["Microcomputer","Embedded computer","Mainframe computer","Analog computer"], a:2,
-    e:"Mainframes support a very large number of simultaneous users and bulk transaction processing, so banks, railways and airlines use them for central processing." },
+    <div class="btn-container">
+        <button class="btn-prev" id="prev-btn" onclick="prevQuestion()" disabled>Previous</button>
+        <button class="btn-next" id="next-btn" onclick="nextQuestion()">Next</button>
+        <button class="btn-submit" id="submit-btn" onclick="submitQuiz()">Submit Test</button>
+    </div>
+</div>
 
-  { type:"pair", topic:"History",
-    q:"Choose the correctly matched pair:",
-    o:["Napier's Bones – Blaise Pascal","Slide Rule – Herman Hollerith","Mark I – Charles Babbage","Stepped Reckoner – Gottfried Leibniz"], a:3,
-    e:"Napier's Bones – John Napier; Slide Rule – William Oughtred; Mark I – Howard Aiken. Only the Stepped Reckoner – Leibniz pair is correct." },
+<div class="container" id="result-screen">
+    <div class="score-board">
+        <h2>Test Completed!</h2>
+        <p>Total Attempted: <span id="total-attempted">0</span> / 50</p>
+        <p>Correct Answers: <span id="total-correct">0</span></p>
+        <p>Incorrect Answers: <span id="total-wrong">0</span></p>
+        <h3>Final Score: <span id="final-score">0</span> / 50.00</h3>
+    </div>
+    
+    <a href="https://t.me/karnatakaeExamseries" target="_blank" class="telegram-link">
+        Join Karnataka e-Exam Test Series on Telegram for More Free CBTs
+    </a>
 
-  { type:"stmt", topic:"History",
-    q:"Consider the following statements:\n1. The abacus is considered one of the earliest calculating devices.\n2. Napier's Bones were invented by Blaise Pascal.\n3. The Pascaline could perform addition and subtraction.\n4. Jacquard's loom used punched cards to control weaving patterns.\nHow many of the statements given above are correct?",
-    o:["Only one","Only two","Only three","All four"], a:2,
-    e:"Statements 1, 3 and 4 are correct. Napier's Bones were invented by John Napier (1617), not Blaise Pascal." },
+    <h3 style="margin-top: 30px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">Answer Key & Explanations</h3>
+    <div id="review-container"></div>
+</div>
 
-  { type:"match", topic:"Generations",
-    q:"Match the generation (List I) with its main technology (List II):",
-    l:["First generation","Second generation","Third generation","Fourth generation"],
-    r:["Microprocessor","Integrated Circuit","Vacuum tube","Transistor"],
-    o:["A-3, B-4, C-2, D-1","A-4, B-3, C-1, D-2","A-3, B-2, C-4, D-1","A-1, B-2, C-3, D-4"], a:0,
-    e:"1st – vacuum tubes; 2nd – transistors; 3rd – integrated circuits (ICs); 4th – microprocessors (LSI/VLSI)." },
+<script>
+    const questions = [
+        // BASICS & DEFINITIONS (10 Questions)
+        {
+            q: "Consider the following statements about a Computer:<br>1. It is a device that processes data into meaningful information.<br>2. GIGO (Garbage In, Garbage Out) relates to the accuracy characteristic of a computer.<br>Which of the statements given above is/are correct?",
+            opt: ["1 only", "2 only", "Both 1 and 2", "Neither 1 nor 2"],
+            ans: 2,
+            exp: "Both are correct. A computer processes raw data into information. GIGO states that if the input data is flawed (garbage in), the resulting output will also be flawed (garbage out), highlighting its accuracy dependence on input."
+        },
+        {
+            q: "Which of the following components is primarily responsible for performing arithmetic operations and logical decisions?",
+            opt: ["Control Unit", "Arithmetic Logic Unit (ALU)", "Primary Memory", "Cache Memory"],
+            ans: 1,
+            exp: "The Arithmetic Logic Unit (ALU) performs all mathematical calculations and logical comparisons in the CPU."
+        },
+        {
+            q: "Which of the following is incorrectly matched regarding computer characteristics?",
+            opt: ["Diligence - Ability to work without fatigue", "Versatility - Performing one specific task exclusively", "Reliability - Consistent output for the same input", "Speed - Processing instructions in picoseconds/nanoseconds"],
+            ans: 1,
+            exp: "Versatility means the capability of a computer to perform entirely different types of tasks simultaneously or sequentially, not just one specific task."
+        },
+        {
+            q: "Consider the following components of a computer system:<br>1. Hardware<br>2. Software<br>3. Data<br>4. User<br>Which of these are considered the fundamental elements required for a computer system to function effectively?",
+            opt: ["1 and 2 only", "1, 2, and 3 only", "1, 3, and 4 only", "1, 2, 3, and 4"],
+            ans: 3,
+            exp: "A complete computer system requires all four: Hardware (physical parts), Software (instructions), Data (raw facts to process), and Users (people operating or benefiting from it)."
+        },
+        {
+            q: "Who is universally recognized as the 'Father of the Computer' for designing the Analytical Engine?",
+            opt: ["Alan Turing", "John von Neumann", "Charles Babbage", "Herman Hollerith"],
+            ans: 2,
+            exp: "Charles Babbage designed the Analytical Engine in the 1830s, which had the basic architecture (input, memory, processing, output) of modern computers."
+        },
+        {
+            q: "Match the following historical computing devices with their inventors:<br>A. Pascaline<br>B. Tabulating Machine<br>C. Z3<br>D. ENIAC<br><br>1. Herman Hollerith<br>2. Blaise Pascal<br>3. J. Presper Eckert & John Mauchly<br>4. Konrad Zuse",
+            opt: ["A-2, B-1, C-4, D-3", "A-1, B-2, C-3, D-4", "A-2, B-4, C-1, D-3", "A-4, B-1, C-2, D-3"],
+            ans: 0,
+            exp: "Pascaline by Blaise Pascal (1642); Tabulating Machine by Herman Hollerith (1890); Z3 by Konrad Zuse (1941); ENIAC by Eckert and Mauchly (1945)."
+        },
+        {
+            q: "Which of the following statements about 'Data' and 'Information' is correct?",
+            opt: ["Data is processed information.", "Information is organized, processed, and meaningful data.", "Data and Information are identical terms in computing.", "Information is the raw facts fed into the computer."],
+            ans: 1,
+            exp: "Data refers to raw, unorganized facts. Information is data that has been processed, organized, and structured in a given context to make it useful."
+        },
+        {
+            q: "What does 'EDVAC' stand for in early computer history?",
+            opt: ["Electronic Discrete Variable Automatic Computer", "Electronic Data Variable Automatic Calculator", "Electrical Digital Variable Automatic Computer", "Electronic Discrete Variable Advanced Computer"],
+            ans: 0,
+            exp: "EDVAC stands for Electronic Discrete Variable Automatic Computer. Unlike ENIAC, it used binary rather than decimal and was a stored-program computer."
+        },
+        {
+            q: "The concept of the 'Stored Program Concept', where both data and instructions are stored in the same memory, was proposed by:",
+            opt: ["Alan Turing", "Charles Babbage", "John von Neumann", "Ada Lovelace"],
+            ans: 2,
+            exp: "John von Neumann introduced the stored-program concept in 1945, which became the foundation (von Neumann architecture) for almost all modern computers."
+        },
+        {
+            q: "Which of the following is considered the first programmer in the history of computers?",
+            opt: ["Grace Hopper", "Ada Lovelace", "Alan Turing", "Margaret Hamilton"],
+            ans: 1,
+            exp: "Ada Lovelace is considered the first computer programmer for her work on Charles Babbage's early mechanical general-purpose computer, the Analytical Engine."
+        },
 
-  { type:"direct", topic:"Generations",
-    q:"The transistor, which started the second generation of computers, was invented at",
-    o:["IBM Research","Bell Laboratories","Intel Corporation","Texas Instruments"], a:1,
-    e:"The transistor was invented in 1947 at Bell Laboratories by John Bardeen, Walter Brattain and William Shockley." },
+        // GENERATIONS OF COMPUTERS (10 Questions)
+        {
+            q: "Consider the following statements regarding the First Generation of computers:<br>1. They used Vacuum Tubes for circuitry.<br>2. They used High-Level Languages like FORTRAN.<br>3. Magnetic drums were used for memory.<br>Which of the statements given above are correct?",
+            opt: ["1 and 2 only", "1 and 3 only", "2 and 3 only", "1, 2, and 3"],
+            ans: 1,
+            exp: "First-generation computers used Vacuum tubes and magnetic drums. However, they relied on Machine Language (0s and 1s), not high-level languages."
+        },
+        {
+            q: "Match the Computer Generation with its core switching component:<br>A. 2nd Generation<br>B. 3rd Generation<br>C. 4th Generation<br>D. 5th Generation<br><br>1. Integrated Circuits (IC)<br>2. Transistors<br>3. Artificial Intelligence / ULSI<br>4. Microprocessors (VLSI)",
+            opt: ["A-1, B-2, C-3, D-4", "A-2, B-1, C-4, D-3", "A-2, B-1, C-3, D-4", "A-4, B-1, C-2, D-3"],
+            ans: 1,
+            exp: "2nd Gen: Transistors; 3rd Gen: Integrated Circuits (SSI/MSI); 4th Gen: VLSI Microprocessors; 5th Gen: ULSI and AI."
+        },
+        {
+            q: "Which of the following is an example of a First Generation computer?",
+            opt: ["IBM 1401", "UNIVAC I", "IBM 360", "Apple II"],
+            ans: 1,
+            exp: "UNIVAC I (Universal Automatic Computer I) was the first commercial computer produced in the US, belonging to the first generation (using vacuum tubes)."
+        },
+        {
+            q: "Consider the following features:<br>1. Introduction of Operating Systems.<br>2. Shift from machine language to assembly language.<br>3. Invention of the Microprocessor.<br>Which of these features belongs to the Second Generation of computers?",
+            opt: ["1 and 2 only", "2 only", "1 and 3 only", "1, 2, and 3"],
+            ans: 0,
+            exp: "The 2nd Gen saw the shift to assembly languages (and early high-level like COBOL/FORTRAN) and the introduction of batch processing operating systems. Microprocessors are 4th Gen."
+        },
+        {
+            q: "The Integrated Circuit (IC) chip, which revolutionized the 3rd generation of computers, was invented by:",
+            opt: ["Jack Kilby and Robert Noyce", "Tim Berners-Lee", "Gordon Moore", "Douglas Engelbart"],
+            ans: 0,
+            exp: "The IC was independently co-invented by Jack Kilby (of Texas Instruments) and Robert Noyce (of Fairchild Semiconductor) in the late 1950s."
+        },
+        {
+            q: "Which of the following is incorrectly matched regarding the scale of integration in ICs?",
+            opt: ["SSI - Small Scale Integration (up to 100 components)", "MSI - Medium Scale Integration (100 to 3,000 components)", "LSI - Large Scale Integration (3,000 to 100,000 components)", "VLSI - Very Low Scale Integration (less than 10 components)"],
+            ans: 3,
+            exp: "VLSI stands for Very Large Scale Integration, containing hundreds of thousands to millions of transistors on a single chip, typical of 4th generation computers."
+        },
+        {
+            q: "Consider the following statements regarding Supercomputers:<br>1. PARAM 8000 was India's first supercomputer.<br>2. C-DAC is responsible for the PARAM series.<br>3. Supercomputers primarily use sequential processing rather than parallel processing.<br>Which of the statements given above is/are correct?",
+            opt: ["1 and 2 only", "2 and 3 only", "1 and 3 only", "1, 2, and 3"],
+            ans: 0,
+            exp: "PARAM 8000 was developed by C-DAC. Statement 3 is wrong because supercomputers achieve their immense speed through parallel processing, not sequential."
+        },
+        {
+            q: "Which of the following generation of computers introduced Time-sharing and Multiprogramming operating systems?",
+            opt: ["First Generation", "Second Generation", "Third Generation", "Fourth Generation"],
+            ans: 2,
+            exp: "Third-generation computers (using ICs) had enough computing power and memory to support time-sharing, multiprogramming, and real-time operating systems."
+        },
+        {
+            q: "The speed of modern supercomputers is typically measured in:",
+            opt: ["MIPS (Millions of Instructions Per Second)", "FLOPS (Floating Point Operations Per Second)", "BIPS (Billion Instructions Per Second)", "Hertz (Hz)"],
+            ans: 1,
+            exp: "Supercomputer performance is measured in FLOPS (Floating-Point Operations Per Second), often scaling to PetaFLOPS or ExaFLOPS today."
+        },
+        {
+            q: "Which of the following statements about the Fifth Generation of computers is incorrect?",
+            opt: ["They rely on Ultra Large Scale Integration (ULSI).", "They focus on Artificial Intelligence and Natural Language Processing.", "They use strictly single-core processors for logical execution.", "They employ parallel processing and quantum computing research."],
+            ans: 2,
+            exp: "Fifth-generation computers utilize multi-core processors and massive parallel processing. They are not strictly single-core."
+        },
 
-  { type:"stmt", topic:"Characteristics & Limitations",
-    q:"Consider the following statements:\n1. A computer has its own IQ and can think independently.\n2. The output of a computer depends on the quality of its input (GIGO).\n3. A computer cannot work without instructions given through a program.\nWhich of the statements given above is/are correct?",
-    o:["1 and 2 only","1 and 3 only","1, 2 and 3","2 and 3 only"], a:3,
-    e:"A computer has zero IQ, so statement 1 is wrong. GIGO (Garbage In, Garbage Out) and dependence on programs are correct." },
+        // ARCHITECTURE & HARDWARE BASICS (10 Questions)
+        {
+            q: "In the von Neumann architecture, the pathway that carries the memory address of the data to be fetched or stored is called the:",
+            opt: ["Data Bus", "Address Bus", "Control Bus", "Universal Bus"],
+            ans: 1,
+            exp: "The Address Bus carries the memory address. The Data Bus carries the actual data, and the Control Bus carries control signals (like read/write commands)."
+        },
+        {
+            q: "Consider the following statements about CPU Registers:<br>1. They are the fastest type of memory in a computer.<br>2. The Program Counter (PC) register holds the address of the next instruction to be executed.<br>Which of the statements is/are correct?",
+            opt: ["1 only", "2 only", "Both 1 and 2", "Neither 1 nor 2"],
+            ans: 2,
+            exp: "Registers are the fastest and smallest memory locations located directly on the CPU. The Program Counter (PC) specifically tracks the next instruction's address."
+        },
+        {
+            q: "Match the following CPU components with their functions:<br>A. ALU<br>B. Control Unit<br>C. Instruction Register<br><br>1. Directs the flow of data and operations.<br>2. Holds the current instruction being executed.<br>3. Performs mathematical calculations.",
+            opt: ["A-3, B-1, C-2", "A-1, B-2, C-3", "A-3, B-2, C-1", "A-2, B-1, C-3"],
+            ans: 0,
+            exp: "ALU does math/logic (3). CU manages data flow and operations (1). Instruction Register holds the currently executing instruction (2)."
+        },
+        {
+            q: "Which among the following is NOT a part of the motherboard?",
+            opt: ["CMOS Battery", "BIOS Chip", "SMPS (Switched-Mode Power Supply)", "Expansion Slots (PCIe)"],
+            ans: 2,
+            exp: "SMPS is a separate hardware component in the cabinet that supplies power to the motherboard. It is not physically a part of the motherboard circuitry itself."
+        },
+        {
+            q: "Consider the following statements about the Machine Cycle:<br>1. It consists of Fetch, Decode, Execute, and Store phases.<br>2. The Control Unit is responsible for decoding the instruction.<br>Which of the statements given above is/are correct?",
+            opt: ["1 only", "2 only", "Both 1 and 2", "Neither 1 nor 2"],
+            ans: 2,
+            exp: "The machine cycle involves Fetching instructions, Decoding them (done by the CU), Executing them (done by ALU), and Storing results."
+        },
+        {
+            q: "Which of the following ports is widely used to connect high-speed graphics cards to the motherboard?",
+            opt: ["SATA", "PCIe (Peripheral Component Interconnect Express)", "VGA", "PS/2"],
+            ans: 1,
+            exp: "PCIe (PCI Express) slots provide high-speed data transfer rates essential for modern graphics processing units (GPUs)."
+        },
+        {
+            q: "The small amount of memory on the motherboard that stores basic hardware settings and the system time when the computer is turned off is powered by the:",
+            opt: ["Cache Memory", "ALU", "CMOS Battery", "Northbridge Chip"],
+            ans: 2,
+            exp: "The CMOS (Complementary Metal-Oxide-Semiconductor) battery continuously powers the CMOS RAM chip, which holds the BIOS settings and real-time clock."
+        },
+        {
+            q: "Which of the following correctly describes a 'Microprocessor'?",
+            opt: ["A processor consisting of vacuum tubes.", "A single integrated circuit containing the core functions of a CPU.", "A software that processes micro-instructions.", "A type of memory chip that acts as a processor buffer."],
+            ans: 1,
+            exp: "A microprocessor is a computer processor where the data processing logic and control is included on a single integrated circuit (IC)."
+        },
+        {
+            q: "Consider the following regarding buses in computer architecture:<br>1. Data Bus is bidirectional.<br>2. Address Bus is unidirectional.<br>Which of the statements is/are correct?",
+            opt: ["1 only", "2 only", "Both 1 and 2", "Neither 1 nor 2"],
+            ans: 2,
+            exp: "The Data Bus is bidirectional (CPU can read and write data). The Address Bus is unidirectional (CPU sends the address to memory/IO, not vice-versa)."
+        },
+        {
+            q: "Which component bridges the communication between the CPU and slower peripheral devices (like USB ports and hard drives)?",
+            opt: ["Northbridge", "Southbridge", "ALU", "L1 Cache"],
+            ans: 1,
+            exp: "In traditional chipsets, the Southbridge handles slower I/O devices (USB, SATA, BIOS), while the Northbridge handles high-speed components (RAM, PCIe)."
+        },
 
-  { type:"misc", topic:"Generations",
-    q:"Arrange the following electronic components in the order in which they were used in successive generations of computers:\nA. Integrated Circuit\nB. Vacuum tube\nC. Microprocessor\nD. Transistor",
-    o:["A, B, D, C","B, A, D, C","B, D, A, C","D, B, A, C"], a:2,
-    e:"Vacuum tube (1st) → Transistor (2nd) → Integrated Circuit (3rd) → Microprocessor (4th)." },
+        // INPUT AND OUTPUT DEVICES (10 Questions)
+        {
+            q: "Match the following input devices with their primary applications:<br>A. MICR<br>B. OMR<br>C. BCR (Barcode Reader)<br>D. OCR<br><br>1. Evaluating multiple-choice exam sheets<br>2. Processing bank cheques<br>3. Converting printed text images into editable text<br>4. Billing at retail store checkouts",
+            opt: ["A-2, B-1, C-4, D-3", "A-1, B-2, C-3, D-4", "A-2, B-4, C-1, D-3", "A-4, B-1, C-2, D-3"],
+            ans: 0,
+            exp: "MICR (Magnetic Ink) for cheques; OMR (Optical Mark) for exams; BCR for retail billing; OCR (Optical Character Recognition) for digitizing text."
+        },
+        {
+            q: "Consider the following statements regarding Output Devices:<br>1. A plotter is an output device used for producing high-quality engineering drawings.<br>2. Impact printers like Dot Matrix use physical striking mechanisms.<br>Which of the statements is/are correct?",
+            opt: ["1 only", "2 only", "Both 1 and 2", "Neither 1 nor 2"],
+            ans: 2,
+            exp: "Both are correct. Plotters use pens to draw continuous high-resolution lines for CAD/engineering. Dot Matrix printers are impact printers."
+        },
+        {
+            q: "Which of the following devices acts as both an Input and an Output device?",
+            opt: ["Projector", "Touch Screen", "Scanner", "Plotter"],
+            ans: 1,
+            exp: "A Touch Screen receives user input (touches) and outputs visual information (display), making it both an I/O device."
+        },
+        {
+            q: "Which of the following statements about printers is incorrect?",
+            opt: ["Laser printers use a toner cartridge and a photosensitive drum.", "Inkjet printers spray droplets of ink onto paper.", "Thermal printers are commonly used for printing ATM receipts.", "Daisy wheel printers are examples of non-impact printers."],
+            ans: 3,
+            exp: "Daisy wheel printers are Impact printers. They have a wheel with characters that physically strike a ribbon against the paper."
+        },
+        {
+            q: "In a standard QWERTY keyboard, the keys F1 to F12 are known as:",
+            opt: ["Modifier keys", "Toggle keys", "Function keys", "Alphanumeric keys"],
+            ans: 2,
+            exp: "F1 through F12 are Function keys. Modifier keys are Shift, Ctrl, Alt. Toggle keys include Caps Lock and Num Lock."
+        },
+        {
+            q: "Consider the following statements about computer displays:<br>1. LCD relies on liquid crystals to modulate light.<br>2. OLED displays require a continuous backlight to illuminate the screen.<br>Which of the statements given above is/are correct?",
+            opt: ["1 only", "2 only", "Both 1 and 2", "Neither 1 nor 2"],
+            ans: 0,
+            exp: "Only 1 is correct. OLED (Organic Light Emitting Diode) displays do not require a backlight because each pixel emits its own light."
+        },
+        {
+            q: "Which input device is primarily used for playing video games and controlling simulators?",
+            opt: ["Light Pen", "Joystick", "Digitizer", "Trackball"],
+            ans: 1,
+            exp: "A joystick consists of a stick that pivots on a base and reports its angle/direction. It is widely used in gaming and flight simulators."
+        },
+        {
+            q: "What does DPI stand for in the context of computer printers and mice?",
+            opt: ["Data Per Inch", "Dots Per Inch", "Digits Per Inch", "Density Per Image"],
+            ans: 1,
+            exp: "DPI stands for Dots Per Inch, a measure of spatial printing, video, or image scanner dot density (resolution)."
+        },
+        {
+            q: "Which of the following is a pointing device widely used as an alternative to a mouse in laptops?",
+            opt: ["Stylus", "Digitizing Tablet", "Touchpad", "Trackpad and Touchpad both mean the same in this context"],
+            ans: 3,
+            exp: "Touchpads (or trackpads) are tactile sensors built into laptops allowing users to control the cursor with finger movements."
+        },
+        {
+            q: "Which biometric input device is most commonly used for recording employee attendance based on physiological characteristics?",
+            opt: ["Webcam", "Fingerprint Scanner", "Microphone", "OMR Scanner"],
+            ans: 1,
+            exp: "Fingerprint scanners capture biometric data (fingerprint ridges) specifically to authenticate identity for attendance or security."
+        },
 
-  { type:"stmt", topic:"Generations",
-    q:"Consider the following statements:\n1. ENIAC belongs to the second generation of computers.\n2. Integrated circuits were used in first-generation computers.\n3. Fourth-generation computers mainly used vacuum tubes.\n4. Fifth-generation computing focuses on artificial intelligence.\nWhich of the statements given above is correct?",
-    o:["Only 1","Only 2","Only 3","Only 4"], a:3,
-    e:"ENIAC is a first-generation machine (vacuum tubes). ICs came in the third generation and microprocessors in the fourth. Only statement 4 is correct." },
+        // MEMORY & STORAGE (10 Questions)
+        {
+            q: "Match the following memory units with their exact byte equivalents:<br>A. 1 Kilobyte (KB)<br>B. 1 Megabyte (MB)<br>C. 1 Gigabyte (GB)<br><br>1. 1024 MB<br>2. 1024 Bytes<br>3. 1024 KB",
+            opt: ["A-2, B-3, C-1", "A-3, B-2, C-1", "A-1, B-2, C-3", "A-2, B-1, C-3"],
+            ans: 0,
+            exp: "1 KB = 1024 Bytes. 1 MB = 1024 KB. 1 GB = 1024 MB."
+        },
+        {
+            q: "Consider the following statements regarding RAM (Random Access Memory):<br>1. It is a non-volatile memory.<br>2. SRAM is faster and more expensive than DRAM.<br>Which of the statements is/are correct?",
+            opt: ["1 only", "2 only", "Both 1 and 2", "Neither 1 nor 2"],
+            ans: 1,
+            exp: "RAM is volatile (loses data when power is off). Statement 2 is correct; SRAM (Static RAM) doesn't need constant refreshing like DRAM, making it faster and more expensive."
+        },
+        {
+            q: "Which of the following types of memory is used to compensate for the speed difference between the main memory and the CPU?",
+            opt: ["Virtual Memory", "Cache Memory", "Flash Memory", "Secondary Memory"],
+            ans: 1,
+            exp: "Cache memory is a small, extremely fast memory placed between the CPU and RAM to store frequently accessed data and instructions."
+        },
+        {
+            q: "Which of the following is incorrectly matched?",
+            opt: ["PROM - Programmable Read-Only Memory", "EPROM - Erasable Programmable Read-Only Memory (Erased via UV light)", "EEPROM - Electrically Erasable Programmable Read-Only Memory", "ROM - Random Only Memory"],
+            ans: 3,
+            exp: "ROM stands for Read-Only Memory, not Random Only Memory."
+        },
+        {
+            q: "Consider the following statements about secondary storage:<br>1. Solid State Drives (SSDs) use flash memory and have no moving parts.<br>2. Hard Disk Drives (HDDs) use magnetic platters with read/write heads.<br>Which of the statements given above is/are correct?",
+            opt: ["1 only", "2 only", "Both 1 and 2", "Neither 1 nor 2"],
+            ans: 2,
+            exp: "Both statements are correct. SSDs are faster and more durable due to lack of mechanical parts, while HDDs rely on mechanical spinning magnetic disks."
+        },
+        {
+            q: "The process of dividing a magnetic disk into concentric circles (tracks) and pie-shaped slices is known as:",
+            opt: ["Tracking", "Formatting", "Crashing", "Partitioning"],
+            ans: 1,
+            exp: "Formatting a disk divides it into tracks and sectors so the operating system can store and locate data efficiently."
+        },
+        {
+            q: "Which of the following represents the smallest unit of data in a computer?",
+            opt: ["Byte", "Nibble", "Bit", "Record"],
+            ans: 2,
+            exp: "A Bit (Binary Digit, 0 or 1) is the smallest unit. A Nibble is 4 bits. A Byte is 8 bits."
+        },
+        {
+            q: "In optical storage media like CDs and DVDs, data is read and written using:",
+            opt: ["Magnetic heads", "Lasers", "Electrical charges", "Punched holes"],
+            ans: 1,
+            exp: "Optical disks use laser beams to read the physical microscopic pits and lands on the surface of the disc."
+        },
+        {
+            q: "What is 'Virtual Memory' in a computer system?",
+            opt: ["Memory stored on a cloud server.", "A technique allowing the execution of processes that are not completely in RAM by using hard disk space.", "The memory reserved exclusively for the Operating System.", "Another name for Cache memory."],
+            ans: 1,
+            exp: "Virtual memory is an OS feature that uses a portion of the secondary storage (HDD/SSD) to simulate additional RAM when physical RAM runs out."
+        },
+        {
+            q: "Flash memory, commonly used in USB pen drives and SSDs, is fundamentally a type of:",
+            opt: ["SRAM", "DRAM", "EEPROM", "Magnetic Storage"],
+            ans: 2,
+            exp: "Flash memory is a specialized type of EEPROM (Electrically Erasable Programmable Read-Only Memory) that can be erased and reprogrammed in large blocks."
+        }
+    ];
 
-  { type:"match", topic:"Classification",
-    q:"Match the type of computer (List I) with its typical use (List II):",
-    l:["Supercomputer","Mainframe computer","Microcomputer","Embedded computer"],
-    r:["Personal desktop used at home","Microwave oven controller","National-level weather and climate modelling","Airline reservation and bank core processing"],
-    o:["A-3, B-1, C-4, D-2","A-3, B-4, C-1, D-2","A-4, B-3, C-1, D-2","A-3, B-4, C-2, D-1"], a:1,
-    e:"Supercomputers do heavy scientific modelling; mainframes handle bulk transactions; microcomputers are personal computers; embedded computers are built into appliances." },
+    let currentQuestionIndex = 0;
+    let userAnswers = new Array(questions.length).fill(null);
 
-  { type:"real", topic:"Classification",
-    q:"A modern washing machine has a small built-in chip that senses the load and automatically selects the wash cycle. This chip is an example of",
-    o:["Embedded computer","Mainframe computer","Supercomputer","Minicomputer"], a:0,
-    e:"An embedded computer is built into a device to perform a dedicated task, as in washing machines, microwave ovens, ATMs and cars." },
+    const questionTextEl = document.getElementById("question-text");
+    const optionsListEl = document.getElementById("options-list");
+    const currentQEl = document.getElementById("current-q");
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const submitBtn = document.getElementById("submit-btn");
+    const quizContainer = document.getElementById("quiz-container");
+    const resultScreen = document.getElementById("result-screen");
 
-  { type:"pair", topic:"Generations",
-    q:"Choose the INCORRECTLY matched pair:",
-    o:["First generation – Machine language","Second generation – Magnetic core memory","Third generation – Microprocessor","Fifth generation – Artificial intelligence"], a:2,
-    e:"The microprocessor (Intel 4004, 1971) marks the fourth generation. Third-generation computers used integrated circuits." },
+    function loadQuestion() {
+        const qData = questions[currentQuestionIndex];
+        currentQEl.innerText = currentQuestionIndex + 1;
+        questionTextEl.innerHTML = `Q${currentQuestionIndex + 1}. ${qData.q}`;
+        
+        optionsListEl.innerHTML = "";
+        qData.opt.forEach((option, index) => {
+            const li = document.createElement("li");
+            li.innerHTML = option;
+            if (userAnswers[currentQuestionIndex] === index) {
+                li.classList.add("selected");
+            }
+            li.onclick = () => selectOption(index);
+            optionsListEl.appendChild(li);
+        });
 
-  { type:"stmt", topic:"Classification",
-    q:"Consider the following statements about mainframe computers:\n1. They are used for bulk transaction processing in banks and airlines.\n2. They are designed for a single user at home.\n3. They can run many programs concurrently for many users.\nWhich of the statements given above is/are correct?",
-    o:["1 and 3 only","1 and 2 only","2 and 3 only","1, 2 and 3"], a:0,
-    e:"Mainframes are large multi-user systems. Single-user home use describes a personal computer, so statement 2 is wrong." },
+        prevBtn.disabled = currentQuestionIndex === 0;
+        
+        if (currentQuestionIndex === questions.length - 1) {
+            nextBtn.style.display = "none";
+            submitBtn.style.display = "inline-block";
+        } else {
+            nextBtn.style.display = "inline-block";
+            submitBtn.style.display = "none";
+        }
+    }
 
-  { type:"match", topic:"Classification",
-    q:"Match the type of computer (List I) with an example (List II):",
-    l:["Analog computer","Digital computer","Hybrid computer","Special-purpose computer"],
-    r:["Laptop","Car speedometer (measures continuously)","Patient-monitoring system in a hospital ICU","Traffic-signal controller"],
-    o:["A-1, B-2, C-3, D-4","A-2, B-1, C-4, D-3","A-3, B-2, C-1, D-4","A-2, B-1, C-3, D-4"], a:3,
-    e:"Analog machines measure continuous quantities; digital computers process discrete binary data; hybrids combine both (e.g., ICU monitoring); special-purpose computers do one dedicated job." },
+    function selectOption(index) {
+        userAnswers[currentQuestionIndex] = index;
+        const options = optionsListEl.children;
+        for (let i = 0; i < options.length; i++) {
+            options[i].classList.remove("selected");
+        }
+        options[index].classList.add("selected");
+    }
 
-  { type:"real", topic:"Characteristics & Limitations",
-    q:"A clerk enters wrong marks into a result-processing software. The computer calculates correctly but prints wrong ranks. This situation best illustrates",
-    o:["Versatility of computers","GIGO principle","Automation","High storage capacity"], a:1,
-    e:"GIGO – Garbage In, Garbage Out. A computer processes whatever data it receives; wrong input gives wrong output." },
+    function nextQuestion() {
+        if (currentQuestionIndex < questions.length - 1) {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+    }
 
-  { type:"stmt", topic:"Classification",
-    q:"Consider the following statements:\n1. Minicomputers are more powerful than supercomputers.\n2. Analog computers process data only in binary form.\n3. Embedded computers are built into devices to perform dedicated tasks.\n4. A laptop is a type of mainframe computer.\nWhich of the statements given above is correct?",
-    o:["Only 1","Only 2","Only 3","Only 4"], a:2,
-    e:"Supercomputers are the most powerful, analog computers work on continuous signals and a laptop is a microcomputer. Only statement 3 is correct." },
+    function prevQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            loadQuestion();
+        }
+    }
 
-  { type:"misc", topic:"History",
-    q:"Which of the following is NOT a manual or mechanical calculating aid used before the electronic era?",
-    o:["Abacus","Napier's Bones","Pascaline","ENIAC"], a:3,
-    e:"ENIAC (1946) was an electronic computer using vacuum tubes. The others are manual or mechanical aids." },
+    function submitQuiz() {
+        if(!confirm("Are you sure you want to submit the test?")) return;
 
-  { type:"stmt", topic:"Generations",
-    q:"Consider the following statements about second-generation computers:\n1. Transistors replaced vacuum tubes.\n2. They were smaller, faster and produced less heat than first-generation machines.\n3. Microprocessors were introduced in this generation.\nWhich of the statements given above is/are correct?",
-    o:["2 and 3 only","1 and 2 only","1 and 3 only","1, 2 and 3"], a:1,
-    e:"Second generation (about 1956–63) used transistors. Microprocessors came in the fourth generation." },
+        let correct = 0;
+        let wrong = 0;
+        let attempted = 0;
+        
+        let reviewHTML = "";
 
-  { type:"match", topic:"History",
-    q:"Match the device (List I) with its inventor or origin (List II):",
-    l:["Abacus","Napier's Bones","Slide Rule","Analytical Engine"],
-    r:["William Oughtred","John Napier","Charles Babbage","Ancient civilisations (Babylon/China)"],
-    o:["A-4, B-2, C-1, D-3","A-4, B-1, C-2, D-3","A-2, B-4, C-1, D-3","A-1, B-2, C-4, D-3"], a:0,
-    e:"Abacus – ancient civilisations; Napier's Bones – John Napier (1617); Slide Rule – William Oughtred (1622); Analytical Engine – Charles Babbage (designed 1837)." },
+        for (let i = 0; i < questions.length; i++) {
+            const q = questions[i];
+            const uAns = userAnswers[i];
+            
+            let statusText = "<span style='color:gray'>Not Attempted</span>";
 
-  { type:"pair", topic:"Classification",
-    q:"Choose the correctly matched pair:",
-    o:["Minicomputer – Single-user pocket device","Supercomputer – Designed only for simple tasks like a calculator","Microcomputer – Uses a microprocessor as its CPU","Mainframe – Slowest type of computer"], a:2,
-    e:"A microcomputer is built around a microprocessor. A supercomputer is the fastest class, and mainframes are large and powerful, not the slowest." },
+            if (uAns !== null) {
+                attempted++;
+                if (uAns === q.ans) {
+                    correct++;
+                    statusText = "<span class='correct-ans'>Correct (+1)</span>";
+                } else {
+                    wrong++;
+                    statusText = "<span class='wrong-ans'>Incorrect (-0.25)</span>";
+                }
+            }
 
-  { type:"real", topic:"Applications",
-    q:"A petrol pump measures the continuous flow of fuel and displays the quantity and price in digital form. It works on the principle of a",
-    o:["Analog computer","Hybrid computer","Mainframe computer","General-purpose digital computer"], a:1,
-    e:"A hybrid computer combines analog and digital features: it measures a continuous quantity and shows digital results." },
+            reviewHTML += `
+                <div class="review-box">
+                    <p><strong>Q${i + 1}. ${q.q}</strong></p>
+                    <p>Your Answer: ${uAns !== null ? q.opt[uAns] : '<em>Skipped</em>'} | ${statusText}</p>
+                    <p class="correct-ans">Correct Answer: ${q.opt[q.ans]}</p>
+                    <div class="explanation"><strong>Explanation:</strong> ${q.exp}</div>
+                </div>
+            `;
+        }
 
-  { type:"stmt", topic:"Classification",
-    q:"Consider the following statements:\n1. The speed of supercomputers is measured in FLOPS.\n2. The speed of mainframe computers is commonly measured in MIPS.\n3. A microcomputer is also called a personal computer.\n4. Hybrid computers combine features of analog and digital computers.\nHow many of the statements given above are correct?",
-    o:["Only one","Only two","Only three","All four"], a:3,
-    e:"All four statements are correct: FLOPS = floating-point operations per second, MIPS = million instructions per second." },
+        const finalScore = (correct * 1) - (wrong * 0.25);
 
-  { type:"direct", topic:"Classification",
-    q:"The PARAM series of supercomputers in India was developed by C-DAC under the leadership of",
-    o:["Vijay P. Bhatkar","Homi J. Bhabha","Vikram Sarabhai","Satish Dhawan"], a:0,
-    e:"Dr. Vijay P. Bhatkar led the development of PARAM, with PARAM 8000 built in 1991 at C-DAC, Pune." },
+        document.getElementById("total-attempted").innerText = attempted;
+        document.getElementById("total-correct").innerText = correct;
+        document.getElementById("total-wrong").innerText = wrong;
+        document.getElementById("final-score").innerText = finalScore.toFixed(2);
+        
+        document.getElementById("review-container").innerHTML = reviewHTML;
 
-  { type:"match", topic:"Components & Functions",
-    q:"Match the unit (List I) with its function (List II):",
-    l:["Arithmetic Logic Unit","Control Unit","Registers","Output unit"],
-    r:["Directs and coordinates all operations","Performs arithmetic and logical operations","High-speed temporary storage inside the CPU","Presents processed results to the user"],
-    o:["A-1, B-2, C-3, D-4","A-2, B-1, C-4, D-3","A-2, B-1, C-3, D-4","A-3, B-1, C-2, D-4"], a:2,
-    e:"ALU does calculations and comparisons, the Control Unit directs operations, registers are the CPU's fast temporary storage, and the output unit presents results." },
+        quizContainer.style.display = "none";
+        resultScreen.style.display = "block";
+    }
 
-  { type:"stmt", topic:"Applications",
-    q:"Consider the following statements:\n1. Weather forecasting uses supercomputers to process huge amounts of data.\n2. Banks use computers for ATMs and core banking.\n3. Hospitals use computers in CT scans and patient records.\nWhich of the statements given above is/are correct?",
-    o:["1 and 2 only","2 and 3 only","1 and 3 only","1, 2 and 3"], a:3,
-    e:"All three are real applications of computers in science, banking and healthcare." },
+    // Initialize Quiz
+    loadQuestion();
+</script>
 
-  { type:"misc", topic:"Characteristics & Limitations",
-    q:"Which of the following is NOT a limitation of a computer?",
-    o:["Lack of common sense","Very high processing speed","Dependence on instructions","Absence of feelings"], a:1,
-    e:"High speed is a characteristic (advantage) of computers. The others are limitations." },
-
-  { type:"real", topic:"Characteristics & Limitations",
-    q:"An online exam software automatically evaluates MCQs but cannot judge whether a student's essay is original unless it is programmed with specific rules. Which limitation of computers does this show?",
-    o:["Computers have no intelligence of their own","Computers are slow","Computers cannot store data","Computers cannot perform calculations"], a:0,
-    e:"A computer has no IQ and works only on the instructions it has been given; it cannot judge on its own." },
-
-  { type:"stmt", topic:"History",
-    q:"Consider the following statements:\n1. The word “computer” is derived from the Latin word “computare”, meaning to calculate.\n2. Charles Babbage designed ENIAC.\n3. Ada Lovelace is known as the father of the computer.\n4. Herman Hollerith invented the Pascaline.\nWhich of the statements given above is correct?",
-    o:["Only 1","Only 2","Only 3","Only 4"], a:0,
-    e:"Babbage designed the Difference and Analytical Engines. Ada Lovelace is the first programmer. The Pascaline was invented by Blaise Pascal." },
-
-  { type:"match", topic:"History",
-    q:"Match the computer (List I) with its significance (List II):",
-    l:["ENIAC","UNIVAC I","Mark I","EDVAC"],
-    r:["Stored-program concept","First commercially produced computer","Electromechanical computer by Howard Aiken","First general-purpose electronic digital computer"],
-    o:["A-1, B-2, C-3, D-4","A-4, B-3, C-2, D-1","A-2, B-4, C-1, D-3","A-4, B-2, C-3, D-1"], a:3,
-    e:"ENIAC – first general-purpose electronic digital computer; UNIVAC I – first commercial computer (1951); Mark I – Howard Aiken; EDVAC – stored-program concept." },
-
-  { type:"pair", topic:"Classification",
-    q:"Choose the INCORRECTLY matched pair:",
-    o:["PARAM – Supercomputer series of C-DAC","IBM PC – Mainframe computer","Cray-1 – Supercomputer designed by Seymour Cray","PDP-8 – Minicomputer"], a:1,
-    e:"The IBM PC (1981) is a microcomputer (personal computer), not a mainframe." },
-
-  { type:"stmt", topic:"History",
-    q:"Consider the following statements about Charles Babbage:\n1. He is often called the “Father of the Computer”.\n2. He built the ENIAC.\n3. He designed the Analytical Engine.\nWhich of the statements given above is/are correct?",
-    o:["1 and 2 only","2 and 3 only","1 and 3 only","1, 2 and 3"], a:2,
-    e:"Babbage designed the Difference Engine and the Analytical Engine. ENIAC was built by Eckert and Mauchly." },
-
-  { type:"real", topic:"Generations",
-    q:"Face-unlock on smartphones, voice assistants and machine learning reflect the goals of which generation of computers?",
-    o:["Second generation","Third generation","Fourth generation","Fifth generation"], a:3,
-    e:"The fifth generation focuses on artificial intelligence, parallel processing and ULSI technology." },
-
-  { type:"match", topic:"Characteristics & Limitations",
-    q:"Match the characteristic (List I) with the situation (List II):",
-    l:["Speed","Accuracy","Diligence","Versatility"],
-    r:["One PC used for typing, music, video editing and accounts","Processing a billion calculations in seconds","Error-free results as long as correct data is fed","Working for hours without tiredness or loss of concentration"],
-    o:["A-1, B-2, C-3, D-4","A-2, B-3, C-4, D-1","A-2, B-4, C-3, D-1","A-3, B-2, C-1, D-4"], a:1,
-    e:"Speed – very fast calculation; Accuracy – error-free results; Diligence – no tiredness; Versatility – many different tasks." },
-
-  { type:"stmt", topic:"Components & Functions",
-    q:"Consider the following statements:\n1. Hardware refers to the physical components of a computer.\n2. Software can be touched and seen physically.\n3. Liveware refers to the users of a computer system.\n4. Firmware is software that is lost when the power is switched off.\nHow many of the statements given above are correct?",
-    o:["Only two","Only one","Only three","All four"], a:0,
-    e:"Statements 1 and 3 are correct. Software is a set of programs and cannot be touched, and firmware is stored permanently in ROM." },
-
-  { type:"direct", topic:"Generations",
-    q:"Which of the following was the world's first microprocessor?",
-    o:["Intel 8080","Intel 8086","Intel 4004","Motorola 68000"], a:2,
-    e:"The Intel 4004 (1971) was the first commercial microprocessor and started the fourth generation." },
-
-  { type:"stmt", topic:"Characteristics & Limitations",
-    q:"Consider the following statements:\n1. Computers can think and reason independently of programs.\n2. Computers have no feelings.\n3. Computers cannot take decisions without instructions.\nWhich of the statements given above is/are correct?",
-    o:["1 and 2 only","2 and 3 only","1 and 3 only","1, 2 and 3"], a:1,
-    e:"Computers cannot think independently. They have no feelings or common sense and only follow programmed instructions." },
-
-  { type:"misc", topic:"Components & Functions",
-    q:"Which of the following is NOT a part of the CPU?",
-    o:["Arithmetic Logic Unit","Control Unit","Registers","Hard disk drive"], a:3,
-    e:"The CPU consists of the ALU, control unit and registers. A hard disk drive is a secondary storage device outside the CPU." },
-
-  { type:"match", topic:"History",
-    q:"Match the computer or processor (List I) with the year (List II):",
-    l:["ENIAC","UNIVAC I","Intel 4004","IBM PC"],
-    r:["1951","1971","1946","1981"],
-    o:["A-3, B-1, C-2, D-4","A-1, B-3, C-2, D-4","A-3, B-1, C-4, D-2","A-2, B-3, C-1, D-4"], a:0,
-    e:"ENIAC – 1946; UNIVAC I – 1951; Intel 4004 – 1971; IBM PC – 1981." },
-
-  { type:"pair", topic:"History",
-    q:"Choose the correctly matched pair:",
-    o:["John von Neumann – Difference Engine","Herman Hollerith – Analytical Engine","Ada Lovelace – First computer programmer","Jacquard – Stepped Reckoner"], a:2,
-    e:"Ada Lovelace wrote the first algorithm intended for Babbage's Analytical Engine. Jacquard is linked to punched cards on looms." },
-
-  { type:"real", topic:"Characteristics & Limitations",
-    q:"A banking software performs the same interest calculation on ten lakh accounts at 3 a.m. with the same precision as at 10 a.m., without any fatigue. Which characteristic is mainly shown?",
-    o:["Speed","Diligence","Versatility","Storage capacity"], a:1,
-    e:"Diligence means a computer can work for long hours without tiredness, boredom or loss of concentration." },
-
-  { type:"stmt", topic:"Generations",
-    q:"Consider the following statements about third-generation computers:\n1. They used integrated circuits (ICs).\n2. Keyboards and monitors replaced punched cards for input and output.\n3. Operating systems allowed multiprogramming.\nWhich of the statements given above is/are correct?",
-    o:["1 and 2 only","2 and 3 only","1 and 3 only","1, 2 and 3"], a:3,
-    e:"Third generation (about 1964–71) used ICs, introduced keyboards and monitors, and operating systems that supported multiprogramming." },
-
-  { type:"stmt", topic:"History",
-    q:"Consider the following statements:\n1. Napier's Bones were used for storing data electronically.\n2. The Analytical Engine was designed as a general-purpose mechanical computer.\n3. EDVAC was built before ENIAC.\n4. Hollerith's tabulating machine was first used for the census of the United Kingdom.\nWhich of the statements given above is correct?",
-    o:["Only 1","Only 2","Only 3","Only 4"], a:1,
-    e:"Napier's Bones were a manual multiplication aid, ENIAC (1946) came before EDVAC, and Hollerith's machine was used for the 1890 US Census." },
-
-  { type:"match", topic:"Components & Functions",
-    q:"Match the term (List I) with its meaning (List II):",
-    l:["Hardware","Software","Firmware","Liveware"],
-    r:["Programs and instructions","Physical, touchable parts","Permanent programs stored in ROM chips","Users and people operating the computer"],
-    o:["A-1, B-2, C-3, D-4","A-2, B-1, C-4, D-3","A-2, B-1, C-3, D-4","A-2, B-3, C-1, D-4"], a:2,
-    e:"Hardware – physical parts; software – programs; firmware – permanent software in ROM; liveware – the people who use computers." },
-
-  { type:"real", topic:"Applications",
-    q:"Which of the following tasks is best handled by a supercomputer rather than an ordinary personal computer?",
-    o:["Simulating the path of a cyclone using millions of data points","Typing a letter","Listening to songs","Browsing a website"], a:0,
-    e:"Supercomputers handle huge scientific calculations such as weather forecasting, climate modelling and research simulations." },
-
-  { type:"stmt", topic:"Classification",
-    q:"Consider the following statements about microcomputers:\n1. Microcomputers belong to the first generation of computers.\n2. They use a microprocessor as their CPU.\n3. Desktops, laptops and tablets are examples.\nWhich of the statements given above is/are correct?",
-    o:["1 and 2 only","1 and 3 only","1, 2 and 3","2 and 3 only"], a:3,
-    e:"Microcomputers came only after the microprocessor (1971), so statement 1 is wrong." },
-
-  { type:"misc", topic:"Generations",
-    q:"Which of the following is NOT correct about fourth-generation computers?",
-    o:["They use microprocessors","They use VLSI technology","Vacuum tubes were their main component","GUI and networking developed"], a:2,
-    e:"Vacuum tubes belong to the first generation. The fourth generation used microprocessors and VLSI." },
-
-  { type:"stmt", topic:"Characteristics & Limitations",
-    q:"Consider the following statements:\n1. Computers have no IQ of their own.\n2. Computers can think and take decisions independently.\n3. Computers become tired after working for long hours.\n4. Computers produce output based on stored instructions.\nHow many of the statements given above are NOT correct?",
-    o:["Only two","Only one","Only three","All four"], a:0,
-    e:"Statements 2 and 3 are incorrect. Statements 1 and 4 are correct." },
-
-  { type:"pair", topic:"History",
-    q:"Choose the INCORRECTLY matched pair:",
-    o:["EDVAC – Stored-program concept","Hollerith's Tabulating Machine – 1890 US Census","UNIVAC I – First commercially produced computer","ENIAC – Built using transistors"], a:3,
-    e:"ENIAC used about 18,000 vacuum tubes. Transistors came later, in the second generation." },
-
-  { type:"stmt", topic:"Components & Functions",
-    q:"Consider the following statements:\n1. The stored-program concept is associated with John von Neumann.\n2. In a stored-program computer, instructions and data are kept in the same memory.\n3. ENIAC was the first computer to use the stored-program concept.\nWhich of the statements given above is/are correct?",
-    o:["1 and 2 only","2 and 3 only","1 and 3 only","1, 2 and 3"], a:0,
-    e:"The stored-program concept came with EDVAC and von Neumann's architecture. ENIAC was originally programmed by rewiring and switches." }
-
-  ]
-};
+</body>
+</html>
