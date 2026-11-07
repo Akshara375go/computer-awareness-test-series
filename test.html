@@ -84,7 +84,7 @@
     .tg{flex-direction:column;align-items:stretch}
     .match{grid-template-columns:1fr}
     .stats{grid-template-columns:1fr 1fr 1fr}
-    .actions .btn{flex:1}
+    .actions .btn{flex:1;padding:12px 8px}
     .qtext{font-size:.96rem}
   }
 </style>
@@ -114,6 +114,7 @@
       <ul>
         <li id="ins-count"></li>
         <li>Each question has one correct answer.</li>
+        <li>Marking: +1 for each correct answer, &minus;0.25 for each wrong answer. Skipped questions carry no marks.</li>
         <li>Choose an option to see the correct answer and explanation at once.</li>
         <li>There is no time limit, so read each question carefully.</li>
         <li>At the end you get your score, weak topics and a review of wrong answers.</li>
@@ -160,6 +161,18 @@ const file = "tests/test-" + String(num).padStart(2,"0") + ".js";
 
 let Q = [], i = 0, score = 0, answers = [];
 
+/* Marking: +1 for correct, -NEG for wrong, 0 for skipped */
+const NEG = 0.25;
+const fmt = n => String(Math.round(n * 100) / 100);
+function marks(){
+  let c = 0, w = 0;
+  answers.forEach((a, idx) => {
+    if (a === null || a === -1 || a === undefined) return;
+    if (a === Q[idx].a) c++; else w++;
+  });
+  return { c: c, w: w, m: c - w * NEG };
+}
+
 if (!window.CBT_BLOCKED) {
   const s = document.createElement("script");
   s.src = file;
@@ -180,7 +193,7 @@ $("startBtn").onclick = () => { i = 0; score = 0; answers = new Array(Q.length).
 
 function renderQ(){
   const q = Q[i];
-  let h = '<div class="qmeta"><span>Question ' + (i+1) + ' / ' + Q.length + '</span><span>Score: ' + score + '</span></div>' +
+  let h = '<div class="qmeta"><span>Question ' + (i+1) + ' / ' + Q.length + '</span><span>Score: ' + fmt(marks().m) + '</span></div>' +
           '<div class="bar"><div style="width:' + (i/Q.length*100) + '%"></div></div>' +
           '<div class="qcard"><div class="tags"><span class="tag">' + esc(TYPE_NAMES[q.type] || "Question") + '</span><span class="tag alt">' + esc(q.topic) + '</span></div>' +
           '<div class="qtext">' + esc(q.q) + '</div>';
@@ -190,18 +203,26 @@ function renderQ(){
   }
   h += '<div class="opts">' + q.o.map((t,k)=>'<button class="opt" data-k="'+k+'"><span class="k">'+String.fromCharCode(97+k)+'</span><span>'+esc(t)+'</span></button>').join("") + '</div>' +
        '<div id="exp"></div>' +
-       '<div class="actions"><button class="btn ghost" id="skipBtn">SKIP</button><button class="btn hide" id="nextBtn"></button></div></div>';
+       '<div class="actions"><button class="btn ghost' + (i === 0 ? ' hide' : '') + '" id="prevBtn">PREVIOUS</button><button class="btn ghost" id="skipBtn">SKIP</button><button class="btn hide" id="nextBtn"></button></div></div>';
   $("quiz").innerHTML = h;
   document.querySelectorAll(".opt").forEach(b => b.onclick = () => choose(+b.dataset.k));
+  $("prevBtn").onclick = prev;
   $("skipBtn").onclick = () => { answers[i] = -1; next(); };
   $("nextBtn").onclick = next;
+  if (answers[i] !== null && answers[i] >= 0) showResult(answers[i]);
 }
 
 function choose(k){
-  const q = Q[i];
+  if (answers[i] !== null && answers[i] >= 0) return;
   answers[i] = k;
+  showResult(k);
+  const sc = document.querySelector(".qmeta span:last-child");
+  if (sc) sc.textContent = "Score: " + fmt(marks().m);
+}
+
+function showResult(k){
+  const q = Q[i];
   const right = k === q.a;
-  if (right) score++;
   document.querySelectorAll(".opt").forEach((b,idx) => {
     b.disabled = true;
     if (idx === q.a) b.classList.add("correct");
@@ -212,7 +233,10 @@ function choose(k){
   const nb = $("nextBtn");
   nb.textContent = (i === Q.length-1) ? "FINISH TEST" : "NEXT QUESTION";
   nb.classList.remove("hide");
-  nb.focus();
+}
+
+function prev(){
+  if (i > 0){ i--; renderQ(); window.scrollTo(0,0); }
 }
 
 function next(){
@@ -240,9 +264,11 @@ function bars(g){
 
 function finish(){
   const total = Q.length;
-  const wrong = answers.filter((a,idx) => a !== null && a !== -1 && a !== Q[idx].a).length;
-  const skipped = total - score - wrong;
-  const pct = Math.round(score / total * 100);
+  const r = marks();
+  const wrong = r.w;
+  const skipped = total - r.c - r.w;
+  const finalMarks = r.m;
+  const pct = Math.max(0, Math.round(finalMarks / total * 100));
   const msg = pct >= 80 ? "Excellent! You are well prepared for this topic." :
               pct >= 60 ? "Good work. Revise the weak topics and try again." :
               pct >= 40 ? "Fair attempt. Study the explanations and retry." :
@@ -257,16 +283,17 @@ function finish(){
   });
   $("result").innerHTML =
     '<h1>Test Completed</h1>' +
-    '<div class="panel" style="text-align:center"><div class="big">' + score + ' / ' + total + '</div>' +
+    '<div class="panel" style="text-align:center"><div class="big">' + fmt(finalMarks) + ' / ' + total + '</div>' +
     '<p style="color:var(--muted)">' + pct + '% &middot; ' + msg + '</p>' +
-    '<div class="stats"><div class="stat"><b style="color:var(--good)">' + score + '</b><span>Correct</span></div>' +
+    '<p style="color:var(--muted);font-size:.85rem">' + r.c + ' correct &times; 1 &minus; ' + wrong + ' wrong &times; ' + NEG + ' = <b style="color:#fff">' + fmt(finalMarks) + '</b></p>' +
+    '<div class="stats"><div class="stat"><b style="color:var(--good)">' + r.c + '</b><span>Correct</span></div>' +
     '<div class="stat"><b style="color:var(--bad)">' + wrong + '</b><span>Wrong</span></div>' +
     '<div class="stat"><b>' + skipped + '</b><span>Skipped</span></div></div></div>' +
     '<div class="tg"><span>Test finished! Join our Telegram group for more tests, updates and discussions.</span>' +
     '<a class="btn" href="' + TG + '" target="_blank" rel="noopener">JOIN TELEGRAM</a></div>' +
     '<div class="panel"><h3>Topic-wise performance</h3>' + bars(group("topic")) + '</div>' +
     '<div class="panel"><h3>Question-type performance</h3>' + bars(group("type")) + '</div>' +
-    '<div class="panel"><h3>Review of wrong and skipped questions (' + (total - score) + ')</h3>' +
+    '<div class="panel"><h3>Review of wrong and skipped questions (' + (total - r.c) + ')</h3>' +
     (review || '<p style="color:var(--good)">Perfect score. Nothing to review!</p>') + '</div>' +
     '<div style="display:flex;gap:10px;margin:18px 0 0;flex-wrap:wrap">' +
     '<button class="btn" id="retry">RETRY TEST</button><a class="btn ghost" href="index.html">ALL TESTS</a></div>';
