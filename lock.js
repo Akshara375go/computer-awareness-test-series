@@ -4,7 +4,7 @@
 (function () {
   var CFG = {
     FREE_TESTS: 2,                                   // tests 1-2 free
-     UPLOADED: 6,                                     // how many tests are uploaded; change to 4, 5... as you add them
+     UPLOADED: 7,                                     // how many tests are uploaded; change to 4, 5... as you add them
     PRICE: "\u20B949",
     RAZORPAY_LINK: "https://rzp.io/rzp/uvfDzSNI",
     TELEGRAM_DM: "https://t.me/Blackpanther2201",
